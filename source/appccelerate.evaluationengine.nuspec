@@ -27,15 +27,15 @@
     <copyright>Copyright 2012-2014</copyright>
     <tags>Appccelerate</tags>
 	<frameworkAssemblies>
-      <frameworkAssembly assemblyName="System" targetFramework="net45" />
-      <frameworkAssembly assemblyName="System.Core" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System" targetFramework="portable-windows8+net45" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="portable-windows8+net45" />
     </frameworkAssemblies>
     <dependencies/>	
   </metadata>
   <files>
-    <file src="..\..\source\Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.dll" target="lib\net45" />
-    <file src="..\..\source\Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.pdb" target="lib\net45" />
-    <file src="..\..\source\Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.xml" target="lib\net45" />
-    <file src="..\..\source\Appccelerate.EvaluationEngine\**\*.cs" target="src" />
+    <file src="Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.dll" target="lib\portable-windows8+net45" />
+    <file src="Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.pdb" target="lib\portable-windows8+net45" />
+    <file src="Appccelerate.EvaluationEngine\bin\Release\Appccelerate.EvaluationEngine.xml" target="lib\portable-windows8+net45" />
+    <file src="Appccelerate.EvaluationEngine\**\*.cs" target="src" />
   </files>  
 </package>
