@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="ValidationSpecification.cs" company="Appccelerate">
-//   Copyright (c) 2008-2013
+//   Copyright (c) 2008-2014
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -44,10 +44,10 @@ namespace Appccelerate.EvaluationEngine.Validation
                     });
 
         It should_return_valid_validation_result = () => 
-            answer.Valid.ShouldBeTrue();
+            answer.Valid.Should().BeTrue();
 
         It should_return_validation_result_without_violations = () => 
-            answer.Violations.ShouldBeEmpty();
+            answer.Violations.Should().BeEmpty();
     }
 
     [Subject(Concern.Validation)]
@@ -64,7 +64,7 @@ namespace Appccelerate.EvaluationEngine.Validation
                     });
 
         It should_return_invalid_validation_result = () => 
-            answer.Valid.ShouldBeFalse();
+            answer.Valid.Should().BeFalse();
 
         It should_return_validation_result_with_violations = () => 
             answer.Violations.Should().HaveCount(1);
