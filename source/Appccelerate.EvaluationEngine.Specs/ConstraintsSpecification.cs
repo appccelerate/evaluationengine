@@ -1,6 +1,6 @@
 //-------------------------------------------------------------------------------
 // <copyright file="ConstraintsSpecification.cs" company="Appccelerate">
-//   Copyright (c) 2008-2013
+//   Copyright (c) 2008-2014
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@
 
 namespace Appccelerate.EvaluationEngine
 {
+    using FluentAssertions;
     using Machine.Specifications;
 
     [Subject(Concern.Answer)]
@@ -53,19 +54,13 @@ namespace Appccelerate.EvaluationEngine
                 answer = engine.Answer(new WhatIsTheText());
             };
 
-        It should_evaluate_expressions_without_constraints = () =>
-            {
-                answer.ShouldContain(NoConstraint);
-            };
+        It should_evaluate_expressions_without_constraints = () => 
+            answer.Should().Contain(NoConstraint);
 
-        It should_evaluate_expressions_with_fulfilled_constraints = () =>
-            {
-                answer.ShouldContain(WithTrueConstraint);
-            };
+        It should_evaluate_expressions_with_fulfilled_constraints = () => 
+            answer.Should().Contain(WithTrueConstraint);
 
-        It should_ignore_expressions_with_constraints_that_are_not_fulfilled = () =>
-            {
-                answer.ShouldNotContain(WithFalseConstraint);
-            };
+        It should_ignore_expressions_with_constraints_that_are_not_fulfilled = () => 
+            answer.Should().NotContain(WithFalseConstraint);
     }
 }
