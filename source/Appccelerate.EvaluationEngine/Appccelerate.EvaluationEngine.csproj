@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Appccelerate.Fundamentals">
-      <HintPath>..\packages\Appccelerate.Fundamentals.2.2.0\lib\portable-windows8+net45\Appccelerate.Fundamentals.dll</HintPath>
+      <HintPath>..\packages\Appccelerate.Fundamentals.2.4.0\lib\portable-windows8+net45\Appccelerate.Fundamentals.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

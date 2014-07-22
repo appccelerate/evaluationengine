@@ -36,8 +36,9 @@
     <AssemblyOriginatorKeyFile />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.Fundamentals">
-      <HintPath>..\packages\Appccelerate.Fundamentals.2.2.0\lib\portable-windows8+net45\Appccelerate.Fundamentals.dll</HintPath>
+    <Reference Include="Appccelerate.Fundamentals, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Appccelerate.Fundamentals.2.4.0\lib\portable-windows8+net45\Appccelerate.Fundamentals.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
