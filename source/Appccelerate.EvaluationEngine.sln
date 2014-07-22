@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appccelerate.EvaluationEngine", "Appccelerate.EvaluationEngine\Appccelerate.EvaluationEngine.csproj", "{0C841155-9D1A-4A45-9376-BAECFB07A092}"
 EndProject
@@ -10,11 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appccelerate.EvaluationEngine.Specs", "Appccelerate.EvaluationEngine.Specs\Appccelerate.EvaluationEngine.Specs.csproj", "{20B2650C-7CB4-47A1-A630-DB41ECAD14B7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appccelerate.EvaluationEngine.Sample", "Appccelerate.EvaluationEngine.Sample\Appccelerate.EvaluationEngine.Sample.csproj", "{31A0C5F7-83C1-4D4D-A67D-66F503814F69}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2603E6A2-3CFF-4663-83F9-7DE2F8D9A6DF}"
-	ProjectSection(SolutionItems) = preProject
-		appccelerate.evaluationengine.nuspec = appccelerate.evaluationengine.nuspec
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
