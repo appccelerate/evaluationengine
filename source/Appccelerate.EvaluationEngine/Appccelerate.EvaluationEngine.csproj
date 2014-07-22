@@ -36,7 +36,10 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile />
+    <AssemblyOriginatorKeyFile>Appccelerate.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
