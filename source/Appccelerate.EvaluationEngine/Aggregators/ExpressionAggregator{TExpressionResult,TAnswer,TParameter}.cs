@@ -47,7 +47,7 @@ namespace Appccelerate.EvaluationEngine.Aggregators
         /// <param name="aggregateFunc">The aggregate function.</param>
         public ExpressionAggregator(TAnswer seed, Expression<Func<TAnswer, TExpressionResult, TAnswer>> aggregateFunc)
         {
-            Ensure.ArgumentNotNull(aggregateFunc, "aggregateFunc");
+            Guard.AgainstNullArgument("aggregateFunc", aggregateFunc);
 
             this.aggregateFunc = aggregateFunc;
             this.f = aggregateFunc.Compile();
@@ -63,7 +63,7 @@ namespace Appccelerate.EvaluationEngine.Aggregators
         /// <returns>Aggregated result</returns>
         public TAnswer Aggregate(IEnumerable<IExpression<TExpressionResult, TParameter>> expressions, TParameter parameter, Context context)
         {
-            Ensure.ArgumentNotNull(context, "context");
+            Guard.AgainstNullArgument("context", context);
 
             var expressionResults = (from expression in expressions select new { expression, ExpressionResult = expression.Evaluate(parameter) }).ToList();
 

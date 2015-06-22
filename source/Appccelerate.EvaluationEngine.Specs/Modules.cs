@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="ModuleSpecification.cs" company="Appccelerate">
+// <copyright file="Modules.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,38 +20,38 @@ namespace Appccelerate.EvaluationEngine
 {
     using FluentAssertions;
 
-    using Machine.Specifications;
+    using Xbehave;
 
-    [Subject(Concern.Modules)]
-    public class When_loading_a_module_into_an_evaluation_engine
+    public class Modules
     {
         private const int NumberOfAnanas = 3;
         private const int NumberOfApples = 2;
 
-        private static IEvaluationEngineModule module;
-        private static IEvaluationEngine testee;
-
-        Establish context = () =>
+        [Scenario]
+        public void LoadModule(
+            IEvaluationEngine testee)
+        {
+            "establish an evaluation engine"._(() =>
             {
                 testee = new EvaluationEngine();
                 testee.Solve<HowManyFruitsAreThere, int>()
                     .AggregateWithExpressionAggregator(0, (aggregate, value) => aggregate + value)
                     .ByEvaluating(q => new FruitCountExpression { Kind = "Apples", NumberOfFruits = NumberOfApples });
+            });
 
-                module = new FruitModule();
-            };
-
-        Because of = () =>
+            "when loading a module into an evaluation engine"._(() =>
             {
+                IEvaluationEngineModule module = new FruitModule();
                 testee.Load(module);
-            };
+            });
 
-        It should_use_definitions_from_module_to_answer_questions_too = () =>
+            "it should use definitions from module to answer questions too"._(() =>
             {
-                var answer = testee.Answer(new HowManyFruitsAreThere());
+                int answer = testee.Answer(new HowManyFruitsAreThere());
 
                 answer.Should().Be(NumberOfApples + NumberOfAnanas);
-            };
+            });
+        }
 
         private class FruitModule : EvaluationEngineModule
         {

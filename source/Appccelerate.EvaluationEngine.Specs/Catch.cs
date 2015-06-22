@@ -1,5 +1,5 @@
-//-------------------------------------------------------------------------------
-// <copyright file="Concern.cs" company="Appccelerate">
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Catch.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,24 +14,26 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 // </copyright>
-//-------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Appccelerate.EvaluationEngine
 {
-    public static class Concern
+    using System;
+
+    public static class Catch
     {
-        public const string Aggregator = "Aggregator";
+        public static Exception Exception<T>(Func<T> throwingFunc)
+        {
+            try
+            {
+                throwingFunc();
+            }
+            catch (Exception exception)
+            {
+                return exception;
+            }
 
-        public const string Strategy = "Strategy";
-
-        public const string Answer = "Question answering";
-
-        public const string Solve = "Solution definition";
-
-        public const string Modules = "Modules";
-
-        public const string HierarchicalEngines = "Hierarchical evaluation engines";
-
-        public const string Logging = "Logging";
+            return null;
+        }
     }
 }

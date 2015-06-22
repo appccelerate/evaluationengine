@@ -22,6 +22,8 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
 
     using Appccelerate.EvaluationEngine.Expressions;
 
+    using FluentAssertions;
+
     using Xunit;
 
     public class ValidationAggregatorFacts
@@ -46,7 +48,7 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
             var answer = this.testee.Aggregate(expressions, 7, null);
             bool valid = answer.Valid;
 
-            Assert.True(valid);
+            valid.Should().BeTrue();
         }
 
         [Fact]
@@ -62,7 +64,7 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
             var answer = this.testee.Aggregate(expressions, 7, null);
             bool valid = answer.Valid;
 
-            Assert.False(valid);
+            valid.Should().BeFalse();
         }
 
         [Fact]
@@ -82,10 +84,8 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
             var answer = this.testee.Aggregate(expressions, 7, null);
             var violations = answer.Violations.ToList();
 
-            Assert.Equal(3, violations.Count());
-            Assert.Equal(Reason1, violations.ElementAt(0).Reason);
-            Assert.Equal(Reason2, violations.ElementAt(1).Reason);
-            Assert.Equal(Reason3, violations.ElementAt(2).Reason);
+            violations.Select(v => v.Reason)
+                .Should().Equal(Reason1, Reason2, Reason3);
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
             var answer = this.testee.Aggregate(expressions, 7, null);
             bool valid = answer.Valid;
 
-            Assert.True(valid);
+            valid.Should().BeTrue();
         }
 
         [Fact]
@@ -109,7 +109,7 @@ namespace Appccelerate.EvaluationEngine.Validation.Aggregators
         {
             string description = this.testee.Describe();
 
-            Assert.Equal("validation aggregator", description);
+            description.Should().Be("validation aggregator");
         }
 
         private static IExpression<IValidationResult, int> CreateExpression(bool valid, params IValidationViolation[] violations)

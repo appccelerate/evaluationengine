@@ -20,6 +20,9 @@ namespace Appccelerate.EvaluationEngine.Validation
 {
     using System.Linq;
     using FakeItEasy;
+
+    using FluentAssertions;
+
     using Xunit;
 
     public class ValidationResultFacts
@@ -36,7 +39,7 @@ namespace Appccelerate.EvaluationEngine.Validation
         {
             bool valid = this.testee.Valid;
 
-            Assert.True(valid);
+            valid.Should().BeTrue();
         }
 
         [Fact]
@@ -46,7 +49,7 @@ namespace Appccelerate.EvaluationEngine.Validation
 
             bool valid = this.testee.Valid;
 
-            Assert.False(valid);
+            valid.Should().BeFalse();
         }
 
         [Fact]
@@ -54,20 +57,19 @@ namespace Appccelerate.EvaluationEngine.Validation
         {
             int count = this.testee.Violations.Count();
 
-            Assert.Equal(0, count);
+            count.Should().Be(0);
         }
 
         [Fact]
         public void ReturnsAddedViolations()
         {
-            var violationMock = A.Fake<IValidationViolation>();
+            var violation = A.Fake<IValidationViolation>();
 
-            this.testee.AddViolation(violationMock);
+            this.testee.AddViolation(violation);
 
             var violations = this.testee.Violations.ToList();
 
-            Assert.Equal(1, violations.Count());
-            Assert.Same(violationMock, violations.ElementAt(0));
+            violations.Should().Equal(violation);
         }
     }
 }

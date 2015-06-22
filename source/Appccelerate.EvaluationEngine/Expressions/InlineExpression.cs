@@ -41,7 +41,7 @@ namespace Appccelerate.EvaluationEngine.Expressions
         /// <param name="inlineExpression">The inline expression.</param>
         public InlineExpression(TQuestion question, Expression<Func<TQuestion, TParameter, TExpressionResult>> inlineExpression)
         {
-            Ensure.ArgumentNotNull(inlineExpression, "inlineExpression");
+            Guard.AgainstNullArgument("inlineExpression", inlineExpression);
 
             this.question = question;
             this.inlineExpression = inlineExpression;

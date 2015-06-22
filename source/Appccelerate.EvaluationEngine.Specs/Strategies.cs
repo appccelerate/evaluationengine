@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="StrategySpecification.cs" company="Appccelerate">
+// <copyright file="Strategies.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,34 +27,64 @@ namespace Appccelerate.EvaluationEngine
 
     using FluentAssertions;
 
-    using Machine.Specifications;
+    using Xbehave;
 
-    [Subject(Concern.Strategy)]
-    public class When_defining_an_own_strategy
+    public class Strategies
     {
-        private const int TheAnswer = 42;
+        public const int TheAnswer = 42;
 
-        private static IEvaluationEngine engine;
-
-        private static int answer;
-
-        Establish context = () =>
+        [Scenario]
+        public void CustomStrategy(
+            IEvaluationEngine engine,
+            int answer)
+        {
+            "establish an evaluatione engine"._(() =>
             {
                 engine = new EvaluationEngine();
-            };
+            });
 
-        Because of = () =>
+            "when defining an own strategy"._(() =>
             {
                 engine.Solve<HowManyFruitsAreThere, int>()
                     .With(new SpecialStrategy());
 
                 answer = engine.Answer(new HowManyFruitsAreThere());
-            };
+            });
 
-        It should_use_own_strategy_instead_of_default_strategy_to_answer_the_question = () =>
+            "it should use own strategy instead of default strategy to answer the question"._(() =>
             {
                 answer.Should().Be(TheAnswer);
-            };
+            });
+        }
+
+        [Scenario]
+        public void AggregatorStrategy(
+            IEvaluationEngine engine,
+            IAggregator<int, int, Missing> aggregator,
+            int answer)
+        {
+            "establish an evaluatione engine"._(() =>
+            {
+                engine = new EvaluationEngine();
+
+                aggregator = A.Fake<IAggregator<int, int, Missing>>();
+                A.CallTo(() => aggregator.Aggregate(A<IEnumerable<IExpression<int, Missing>>>._, Missing.Value, A<Context>._)).Returns(TheAnswer);
+            });
+
+            "when defining aggregator strategy"._(() =>
+            {
+                engine.Solve<HowManyFruitsAreThere, int>()
+                    .WithAggregatorStrategy()
+                    .AggregateWith(aggregator);
+
+                answer = engine.Answer(new HowManyFruitsAreThere());
+            });
+
+            "it should use aggregator strategy to answer the question"._(() =>
+            {
+                answer.Should().Be(TheAnswer);
+            });
+        }
 
         private class SpecialStrategy : IStrategy<int>
         {
@@ -68,36 +98,5 @@ namespace Appccelerate.EvaluationEngine
                 return "my own special strategy";
             }
         }
-    }
-
-    [Subject(Concern.Strategy)]
-    public class When_defining_aggregator_strategy
-    {
-        private const int TheAnswer = 42;
-
-        private static IEvaluationEngine engine;
-
-        private static IAggregator<int, int, Missing> aggregator; 
-        private static int answer;
-
-        Establish context = () =>
-        {
-            engine = new EvaluationEngine();
-
-            aggregator = A.Fake<IAggregator<int, int, Missing>>();
-            A.CallTo(() => aggregator.Aggregate(A<IEnumerable<IExpression<int, Missing>>>._, Missing.Value, A<Context>._)).Returns(TheAnswer);
-        };
-
-        Because of = () =>
-        {
-            engine.Solve<HowManyFruitsAreThere, int>()
-                .WithAggregatorStrategy()
-                .AggregateWith(aggregator);
-
-            answer = engine.Answer(new HowManyFruitsAreThere());
-        };
-
-        It should_use_aggregator_strategy_to_answer_the_question = () => 
-            answer.Should().Be(TheAnswer);
     }
 }

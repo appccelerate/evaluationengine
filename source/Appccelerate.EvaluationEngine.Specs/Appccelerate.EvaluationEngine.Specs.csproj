@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\xunit.runner.msbuild.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.runner.msbuild.props" Condition="Exists('..\packages\xunit.runner.msbuild.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.runner.msbuild.props')" />
+  <Import Project="..\packages\Xbehave.Core.2.0.0-rc002-build543\build\portable-net45\Xbehave.Core.props" Condition="Exists('..\packages\Xbehave.Core.2.0.0-rc002-build543\build\portable-net45\Xbehave.Core.props')" />
+  <Import Project="..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,7 +14,7 @@
     <AssemblyName>Appccelerate.EvaluationEngine.Specs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>c7a0e5ea</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>81fc5bd8</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.Fundamentals">
-      <HintPath>..\packages\Appccelerate.Fundamentals.2.8.0\lib\portable-windows8+net45\Appccelerate.Fundamentals.dll</HintPath>
+    <Reference Include="Appccelerate.Fundamentals, Version=3.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Appccelerate.Fundamentals.3.0.0\lib\portable-windows8+net45+wp80\Appccelerate.Fundamentals.dll</HintPath>
     </Reference>
     <Reference Include="FakeItEasy">
       <HintPath>..\packages\FakeItEasy.1.25.1\lib\net40\FakeItEasy.dll</HintPath>
@@ -43,12 +47,6 @@
     <Reference Include="FluentAssertions.Core">
       <HintPath>..\packages\FluentAssertions.3.2.2\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\packages\Machine.Specifications.0.9.1\lib\net45\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.Clr4">
-      <HintPath>..\packages\Machine.Specifications.0.9.1\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,32 +54,34 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    <Reference Include="Xbehave.Core">
+      <HintPath>..\packages\Xbehave.Core.2.0.0-rc002-build543\lib\portable-net45\Xbehave.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.abstractions">
+      <HintPath>..\packages\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core">
+      <HintPath>..\packages\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregatorSpecifications.cs" />
-    <Compile Include="AnswerParametrizedQuestionsSpecification.cs" />
-    <Compile Include="AnswerQuestionsSpecification.cs" />
-    <Compile Include="Concern.cs" />
-    <Compile Include="ConstraintsSpecification.cs" />
-    <Compile Include="ExpressionDefinitionSpecification.cs" />
+    <Compile Include="Aggregators.cs" />
+    <Compile Include="Answering.cs" />
+    <Compile Include="Catch.cs" />
+    <Compile Include="ExpressionDefinition.cs" />
     <Compile Include="FruitCountExpression.cs" />
-    <Compile Include="HierarchicalEvaluationEnginesSpecification.cs" />
+    <Compile Include="HierarchicalEvaluationEngines.cs" />
     <Compile Include="HowManyFruitsAreThere.cs" />
     <Compile Include="HowManyFruitsAreThereStartingWith.cs" />
     <Compile Include="HowManyWordsDoesThisTextHave.cs" />
-    <Compile Include="LoggingSpecification.cs" />
-    <Compile Include="ModuleSpecification.cs" />
-    <Compile Include="NoAggregatorSpecification.cs" />
+    <Compile Include="Logging.cs" />
+    <Compile Include="Modules.cs" />
     <Compile Include="ParametrizedFruitExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\GlobalAssemblyInfo.cs" />
-    <Compile Include="StrategySpecification.cs" />
-    <Compile Include="Validation\Concern.cs" />
-    <Compile Include="Validation\ValidationExtensibilitySpecification.cs" />
-    <Compile Include="Validation\ValidationSpecification.cs" />
+    <Compile Include="Strategies.cs" />
+    <Compile Include="Validation\ValidationExtensibility.cs" />
+    <Compile Include="Validation\Validation.cs" />
     <Compile Include="WhatIsTheText.cs" />
     <Compile Include="WordCountExpression.cs" />
   </ItemGroup>
@@ -103,17 +103,18 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\StyleCop.MSBuild.4.7.49.0\build\StyleCop.MSBuild.Targets'))" />
-    <Error Condition="!Exists('..\packages\xunit.MSBuild.1.9.2.3\build\xunit.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.MSBuild.1.9.2.3\build\xunit.MSBuild.targets'))" />
     <Error Condition="!Exists('..\packages\Appccelerate.VersionTask.1.17.0\build\Appccelerate.VersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.VersionTask.1.17.0\build\Appccelerate.VersionTask.targets'))" />
     <Error Condition="!Exists('..\packages\Appccelerate.CheckHintPathTask.1.15.0\build\Appccelerate.CheckHintPathTask.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.CheckHintPathTask.1.15.0\build\Appccelerate.CheckHintPathTask.targets'))" />
-    <Error Condition="!Exists('..\packages\Appccelerate.Development.Specs.1.14.0\build\Appccelerate.Development.Specs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.Development.Specs.1.14.0\build\Appccelerate.Development.Specs.targets'))" />
-    <Error Condition="!Exists('..\packages\Appccelerate.Development.1.14.0\build\Appccelerate.development.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.Development.1.14.0\build\Appccelerate.development.targets'))" />
+    <Error Condition="!Exists('..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
+    <Error Condition="!Exists('..\packages\Xbehave.Core.2.0.0-rc002-build543\build\portable-net45\Xbehave.Core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xbehave.Core.2.0.0-rc002-build543\build\portable-net45\Xbehave.Core.props'))" />
+    <Error Condition="!Exists('..\packages\Appccelerate.Development.1.21.0\build\Appccelerate.development.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.Development.1.21.0\build\Appccelerate.development.targets'))" />
+    <Error Condition="!Exists('..\packages\xunit.runner.msbuild.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.runner.msbuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.msbuild.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.runner.msbuild.props'))" />
+    <Error Condition="!Exists('..\packages\Appccelerate.Development.Specs.1.21.0\build\Appccelerate.Development.Specs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Appccelerate.Development.Specs.1.21.0\build\Appccelerate.Development.Specs.targets'))" />
   </Target>
-  <Import Project="..\packages\xunit.MSBuild.1.9.2.3\build\xunit.MSBuild.targets" Condition="Exists('..\packages\xunit.MSBuild.1.9.2.3\build\xunit.MSBuild.targets')" />
   <Import Project="..\packages\Appccelerate.VersionTask.1.17.0\build\Appccelerate.VersionTask.targets" Condition="Exists('..\packages\Appccelerate.VersionTask.1.17.0\build\Appccelerate.VersionTask.targets')" />
   <Import Project="..\packages\Appccelerate.CheckHintPathTask.1.15.0\build\Appccelerate.CheckHintPathTask.targets" Condition="Exists('..\packages\Appccelerate.CheckHintPathTask.1.15.0\build\Appccelerate.CheckHintPathTask.targets')" />
-  <Import Project="..\packages\Appccelerate.Development.Specs.1.14.0\build\Appccelerate.Development.Specs.targets" Condition="Exists('..\packages\Appccelerate.Development.Specs.1.14.0\build\Appccelerate.Development.Specs.targets')" />
-  <Import Project="..\packages\Appccelerate.Development.1.14.0\build\Appccelerate.development.targets" Condition="Exists('..\packages\Appccelerate.Development.1.14.0\build\Appccelerate.development.targets')" />
+  <Import Project="..\packages\Appccelerate.Development.1.21.0\build\Appccelerate.development.targets" Condition="Exists('..\packages\Appccelerate.Development.1.21.0\build\Appccelerate.development.targets')" />
+  <Import Project="..\packages\Appccelerate.Development.Specs.1.21.0\build\Appccelerate.Development.Specs.targets" Condition="Exists('..\packages\Appccelerate.Development.Specs.1.21.0\build\Appccelerate.Development.Specs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -41,7 +41,7 @@ namespace Appccelerate.EvaluationEngine.Internals
             var result = this.testee.FindInHierarchyAndCloneDefinition(new TestQuestion());
 
             result
-                .Should().ShouldBeEquivalentTo(definition, o => o.ExcludingMissingProperties());
+                .Should().ShouldBeEquivalentTo(definition, o => o.ExcludingMissingMembers());
 
             result
                 .Should().NotBeSameAs(definition, "a clone should be returned so that the original object cannot be changed.");

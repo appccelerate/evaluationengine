@@ -1,5 +1,5 @@
 ﻿//-------------------------------------------------------------------------------
-// <copyright file="AggregatorSpecifications.cs" company="Appccelerate">
+// <copyright file="Aggregators.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,30 +26,35 @@ namespace Appccelerate.EvaluationEngine
 
     using FluentAssertions;
 
-    using Machine.Specifications;
+    using Xbehave;
 
-    [Subject(Concern.Aggregator)]
-    public class When_defining_a_own_aggregator
+    public class Aggregators
     {
-        private static EvaluationEngine engine;
-
-        private static string answer;
-
-        Establish context = () =>
+        [Scenario]
+        public void CustomAggregator(
+            EvaluationEngine engine,
+            string answer)
+        {
+            "establish an evaluation engine"._(() =>
             {
                 engine = new EvaluationEngine();
+            });
 
+            "when defining an own aggregator"._(() =>
+            {
                 engine.Solve<MyQuestion, string>()
                     .AggregateWith(new MyAggregator())
                     .ByEvaluating((q, p) => "hello")
                     .ByEvaluating((q, p) => "world");
-            };
 
-        Because of = () =>
-            answer = engine.Answer(new MyQuestion());
+                answer = engine.Answer(new MyQuestion());
+            });
 
-        It should_use_own_aggregator_to_aggregate_expression_results = () =>
-            answer.Should().Be(" hello world");
+            "it should use own aggregator to aggregate expression results"._(() =>
+            {
+                answer.Should().Be(" hello world");
+            });
+        }
 
         public class MyQuestion : IQuestion<string>
         {

@@ -45,7 +45,7 @@ namespace Appccelerate.EvaluationEngine
             this IAggregatorSyntax<TQuestion, TAnswer, TParameter, TExpressionResult> syntax, TAnswer seed, Expression<Func<TAnswer, TExpressionResult, TAnswer>> aggregateFunc)
              where TQuestion : IQuestion<TAnswer, TParameter>
         {
-            Ensure.ArgumentNotNull(syntax, "syntax");
+            Guard.AgainstNullArgument("syntax", syntax);
 
             return syntax.AggregateWith(new Aggregators.ExpressionAggregator<TExpressionResult, TAnswer, TParameter>(seed, aggregateFunc));
         }
@@ -62,7 +62,7 @@ namespace Appccelerate.EvaluationEngine
             this IAggregatorSyntax<TQuestion, TAnswer, TParameter, TAnswer> syntax)
              where TQuestion : IQuestion<TAnswer, TParameter>
         {
-            Ensure.ArgumentNotNull(syntax, "syntax");
+            Guard.AgainstNullArgument("syntax", syntax);
 
             return syntax.AggregateWith(new Aggregators.SingleExpressionAggregator<TAnswer, TParameter>());
         }
@@ -84,7 +84,7 @@ namespace Appccelerate.EvaluationEngine
             where TValidationResult : class, IValidationResult<TValidationViolation>
             where TValidationViolation : IValidationViolation
         {
-            Ensure.ArgumentNotNull(syntax, "syntax");
+            Guard.AgainstNullArgument("syntax", syntax);
 
             return syntax.AggregateWith(new ValidationAggregator<TValidationResult, TValidationViolation, TParameter>(validationResultFactory));
         }
@@ -100,7 +100,7 @@ namespace Appccelerate.EvaluationEngine
             this IAggregatorSyntax<TQuestion, IValidationResult, TParameter, IValidationResult> syntax)
              where TQuestion : IQuestion<IValidationResult, TParameter>
         {
-            Ensure.ArgumentNotNull(syntax, "syntax");
+            Guard.AgainstNullArgument("syntax", syntax);
 
             return syntax.AggregateWith(new ValidationAggregator<TParameter>());
         }

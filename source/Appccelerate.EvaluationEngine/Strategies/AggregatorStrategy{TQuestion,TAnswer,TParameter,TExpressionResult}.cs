@@ -41,7 +41,7 @@ namespace Appccelerate.EvaluationEngine.Strategies
         /// <returns>The answer.</returns>
         public TAnswer Execute(IQuestion<TAnswer, TParameter> question, TParameter parameter, IDefinition definition, Context context)
         {
-            Ensure.ArgumentNotNull(context, "context");
+            Guard.AgainstNullArgument("context", context);
 
             var d = (IDefinition<TQuestion, TAnswer, TParameter, TExpressionResult>)definition;
             var q = (TQuestion)question;

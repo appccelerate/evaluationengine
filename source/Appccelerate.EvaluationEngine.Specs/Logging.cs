@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="LoggingSpecification.cs" company="Appccelerate">
+// <copyright file="Logging.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,16 +25,18 @@ namespace Appccelerate.EvaluationEngine
 
     using FluentAssertions;
 
-    using Machine.Specifications;
+    using Xbehave;
 
-    [Subject(Concern.Logging)]
-    public class When_an_answer_is_calculated
+    public class Logging
     {
-        private static IEvaluationEngine engine;
+        [Scenario]
+        public void Calculation()
+        {
+            IEvaluationEngine engine = null;
 
-        private static Logger logExtension;
+            Logger logExtension = null;
 
-        Establish context = () =>
+            "establish"._(() =>
             {
                 logExtension = new Logger();
 
@@ -49,23 +51,28 @@ namespace Appccelerate.EvaluationEngine
                         .ByEvaluating((q, p) => p == 'B' ? 8 : 0)
                     .When(q => false)
                         .ByEvaluating(q => new ParametrizedFruitExpression { Kind = "Unknown" });
-            };
+            });
 
-        Because of = () => 
-            engine.Answer(new HowManyFruitsAreThereStartingWith(), 'A');
+            "when an answer is calculated"._(() =>
+            {
+                engine.Answer(new HowManyFruitsAreThereStartingWith(), 'A');
+            });
 
-        It should_log_how_answer_was_derived = () =>
-            logExtension.FoundAnswerLog
-                .Should().Contain(HowManyFruitsAreThereStartingWith.Description, "answered question")
-                .And.Contain("aggregator strategy", "used strategy")
-                .And.Contain("expression aggregator with seed '0' and aggregate function (aggregate, value) => (aggregate + value)", "used aggregator")
-                .And.Contain("Parameter = A", "provided parameter")
-                .And.Contain("Answer = 3", "calculated answer")
-                .And.Contain("1 Apple returned 1", "used expression with result")
-                .And.Contain("2 Ananas returned 2", "used expression with result")
-                .And.Contain("4 Banana returned 0", "used expression with result")
-                .And.Contain("inline expression = (q, p) => IIF((Convert(p) == 66), 8, 0) returned 0", "used expression with result")
-                .And.NotContain("Unknown", "unknwon expression should not be evaluated due to unfulfilled constraint");
+            "it should log how answer was derived"._(() =>
+            {
+                logExtension.FoundAnswerLog
+                    .Should().Contain(HowManyFruitsAreThereStartingWith.Description, "answered question")
+                    .And.Contain("aggregator strategy", "used strategy")
+                    .And.Contain("expression aggregator with seed '0' and aggregate function (aggregate, value) => (aggregate + value)", "used aggregator")
+                    .And.Contain("Parameter = A", "provided parameter")
+                    .And.Contain("Answer = 3", "calculated answer")
+                    .And.Contain("1 Apple returned 1", "used expression with result")
+                    .And.Contain("2 Ananas returned 2", "used expression with result")
+                    .And.Contain("4 Banana returned 0", "used expression with result")
+                    .And.Contain("inline expression = (q, p) => IIF((Convert(p) == 66), 8, 0) returned 0", "used expression with result")
+                    .And.NotContain("Unknown", "unknwon expression should not be evaluated due to unfulfilled constraint");
+            });
+        }
 
         private class Logger : ILogExtension
         {
@@ -77,7 +84,7 @@ namespace Appccelerate.EvaluationEngine
                                   select new { Expression = expression.Expression.Describe(), expression.ExpressionResult };
 
                 this.FoundAnswerLog = string.Format(
-                    "Question = {1}{0}Strategy = {2}{0}Aggregator = {3}{0}Parameter = {4}{0}Answer = {5}{0}Expressions = {6}",
+                    "Question = {1}{0}Strategy = {2}{0}Aggregators = {3}{0}Parameter = {4}{0}Answer = {5}{0}ExpressionDefinition = {6}",
                     Environment.NewLine,
                     context.Question.Describe(),
                     context.Strategy.Describe(),

@@ -97,7 +97,7 @@ namespace Appccelerate.EvaluationEngine.Internals
         public static void BeACloneOf(this ObjectAssertions assertion, IDefinition original)
         {
             assertion.Subject.As<Definition<TestQuestion, string, Missing, string>>()
-                .Should().ShouldBeEquivalentTo(original, o => o.ExcludingMissingProperties());
+                .Should().ShouldBeEquivalentTo(original, o => o.ExcludingMissingMembers());
 
             assertion.Subject
                 .Should().NotBeSameAs(original, "a clone is expected so that original definition cannot be modified.");

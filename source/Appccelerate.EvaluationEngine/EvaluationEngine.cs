@@ -46,7 +46,7 @@ namespace Appccelerate.EvaluationEngine
         /// <param name="parentEngine">The parent engine. Pass the parent engine to build up hierarchical engines.</param>
         public EvaluationEngine(IDefinitionHostProvider parentEngine)
         {
-            Ensure.ArgumentNotNull(parentEngine, "parentEngine");
+            Guard.AgainstNullArgument("parentEngine", parentEngine);
 
             var factory = new DefaultFactory();
             this.engine = new Engine(new DefinitionHost(parentEngine.DefinitionHost), factory, factory);
@@ -148,7 +148,7 @@ namespace Appccelerate.EvaluationEngine
         /// <param name="evaluationEngineModule">The evaluation engine module.</param>
         public void Load(IEvaluationEngineModule evaluationEngineModule)
         {
-            Ensure.ArgumentNotNull(evaluationEngineModule, "evaluationEngineModule");
+            Guard.AgainstNullArgument("evaluationEngineModule", evaluationEngineModule);
 
             evaluationEngineModule.Load(this);
         }

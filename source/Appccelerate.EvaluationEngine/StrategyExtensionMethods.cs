@@ -39,7 +39,7 @@ namespace Appccelerate.EvaluationEngine
             this IDefinitionSyntax<TQuestion, TAnswer, TParameter, TExpressionResult> syntax)
             where TQuestion : IQuestion<TAnswer, TParameter>
         {
-            Ensure.ArgumentNotNull(syntax, "syntax");
+            Guard.AgainstNullArgument("syntax", syntax);
 
             return syntax.With(new AggregatorStrategy<TQuestion, TAnswer, TParameter, TExpressionResult>());
         }

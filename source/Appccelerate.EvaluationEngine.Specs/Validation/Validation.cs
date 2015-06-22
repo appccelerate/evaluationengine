@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------------------
-// <copyright file="ValidationSpecification.cs" company="Appccelerate">
+// <copyright file="Validation.cs" company="Appccelerate">
 //   Copyright (c) 2008-2015
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +16,6 @@
 // </copyright>
 //-------------------------------------------------------------------------------
 
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedMember.Global
-#pragma warning disable 169
-
 namespace Appccelerate.EvaluationEngine.Validation
 {
     using System.Linq;
@@ -28,67 +24,90 @@ namespace Appccelerate.EvaluationEngine.Validation
 
     using FluentAssertions;
 
-    using Machine.Specifications;
+    using Xbehave;
 
-    [Subject(Concern.Validation)]
-    public class When_validating_valid_data : DataValidationContext
+    public class Validation
     {
-        private static IValidationResult answer;
+        const string ViolationReason = "Name is empty";
 
-        Because of = () =>
-            answer = Engine.Answer(
+        [Scenario]
+        public void ValidData(
+            EvaluationEngine engine)
+        {
+            IValidationResult answer = null;
+
+            "establish an evaluation engine with validation answer"._(() =>
+            {
+                engine = new EvaluationEngine();
+
+                engine.Solve<IsDataValid, IValidationResult, Data>()
+                    .AggregateWithValidationAggregator()
+                    .ByEvaluating(q => new NameSetRule())
+                    .ByEvaluating(q => new DescriptionSetRule());
+            });
+
+            "when validating valid data"._(() =>
+            {
+                answer = engine.Answer(
                 new IsDataValid(), 
                 new Data
                     {
                         Name = "Tester"
                     });
+            });
 
-        It should_return_valid_validation_result = () => 
-            answer.Valid.Should().BeTrue();
+            "it should return valid validation result"._(() =>
+            {
+                answer.Valid.Should().BeTrue();
+            });
 
-        It should_return_validation_result_without_violations = () => 
-            answer.Violations.Should().BeEmpty();
-    }
+            "it should return validation result without violations"._(() =>
+            {
+                answer.Violations.Should().BeEmpty();
+            });
+        }
 
-    [Subject(Concern.Validation)]
-    public class When_validating_invalid_data : DataValidationContext
-    {
-        private static IValidationResult answer;
+        [Scenario]
+        public void InvalidData(
+            EvaluationEngine engine)
+        {
+            IValidationResult answer = null;
 
-        Because of = () =>
-            answer = Engine.Answer(
+            "establish"._(() =>
+            {
+                engine = new EvaluationEngine();
+
+                engine.Solve<IsDataValid, IValidationResult, Data>()
+                    .AggregateWithValidationAggregator()
+                    .ByEvaluating(q => new NameSetRule())
+                    .ByEvaluating(q => new DescriptionSetRule());
+            });
+
+            "when validating invalid data"._(() =>
+            {
+                answer = engine.Answer(
                 new IsDataValid(), 
                 new Data
                     {
                         Name = null, 
                     });
+            });
 
-        It should_return_invalid_validation_result = () => 
-            answer.Valid.Should().BeFalse();
-
-        It should_return_validation_result_with_violations = () => 
-            answer.Violations.Should().HaveCount(1);
-
-        It should_return_violations_with_reason_set_by_failing_rule = () => 
-            answer.Violations.Single().Reason.Should().Be(ViolationReason);
-    }
-
-    [Subject(Concern.Validation)]
-    public class DataValidationContext
-    {
-        protected const string ViolationReason = "Name is empty";
-
-        Establish context = () =>
+            "it should return invalid validation result"._(() =>
             {
-                Engine = new EvaluationEngine();
+                answer.Valid.Should().BeFalse();
+            });
 
-                Engine.Solve<IsDataValid, IValidationResult, Data>()
-                    .AggregateWithValidationAggregator()
-                    .ByEvaluating(q => new NameSetRule())
-                    .ByEvaluating(q => new DescriptionSetRule());
-            };
+            "it should return validation result with violations"._(() =>
+            {
+                answer.Violations.Should().HaveCount(1);
+            });
 
-        protected static EvaluationEngine Engine { get; private set; }
+            "it should return violations with reason set by failing rule"._(() =>
+            {
+                answer.Violations.Single().Reason.Should().Be(ViolationReason);
+            });
+        }
 
         protected class IsDataValid : IQuestion<IValidationResult, Data>
         {

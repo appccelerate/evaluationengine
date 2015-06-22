@@ -18,8 +18,13 @@
 
 using System.Reflection;
 
+using Xunit;
+
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Appccelerate.EvaluationEngine.Facts")]
 [assembly: AssemblyDescription("")]
+
+// until matchers in FakeItEasy are thread-safe, this is needed:
+[assembly: CollectionBehavior(MaxParallelThreads = 1)]
